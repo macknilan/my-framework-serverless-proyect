@@ -1,0 +1,92 @@
+service: crud-serverless-users
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.11
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action: 'dynamodb:*'
+          Resource: arn:aws:dynamodb:us-east-1:148037648285:table/usersTable
+
+plugins:
+  - serverless-python-requirements
+  - serverless-dynamodb
+  - serverless-offline
+
+
+package:
+  individually: true
+  patterns:
+    - "!*/**"
+    # EL PATRON COINCIDE CON TODOS LOS ARCHIVOS EN EN LOS DIRECTORIOS DEBEN DE SER IGNORADOS/EXCLUIRSE
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+  serverless-dynamodb:
+    # If you only want to use DynamoDB Local in some stages, declare them here
+    stages:
+      - dev
+    start:
+      port: 8000
+      inMemory: true
+      migrate: true
+    # Uncomment only if you already have a DynamoDB running locally
+    # noStart: true
+
+functions:
+  get-users:
+    handler: get_users/handler.get_users
+    package:
+      patterns:
+        - "get_users/handler.py" # EL PATRON ESTABLECE QUE SOLO SE DEBE DE INCLUIR EL ARCHIVO handler.py
+    events:
+      - httpApi:
+          path: /users/{id}
+          method: GET
+  create-users:
+    handler: create_users/handler.create_users
+    package:
+      patterns:
+        - "create_users/handler.py"
+    events:
+      - httpApi:
+          path: /users
+          method: POST
+  update-users:
+    handler: update_users/handler.update_users
+    package:
+      patterns:
+        - "update_users/handler.py"
+    events:
+      - httpApi:
+          path: /users/{id}
+          method: PUT
+  delete-users:
+    handler: delete_users/handler.delete_users
+    package:
+      patterns:
+        - "delete_users/handler.py"
+    events:
+      - httpApi:
+          path: /users/{id}
+          method: DELETE
+
+resources:
+  Resources:
+    usersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: usersTable
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
