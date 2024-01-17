@@ -12,7 +12,6 @@ provider:
           Resource: arn:aws:dynamodb:us-east-1:148037648285:table/usersTable
 
 plugins:
-  - serverless-python-requirements
   - serverless-dynamodb
   - serverless-offline
 
@@ -44,36 +43,56 @@ functions:
       patterns:
         - "get_users/handler.py" # EL PATRON ESTABLECE QUE SOLO SE DEBE DE INCLUIR EL ARCHIVO handler.py
     events:
-      - httpApi:
+      - http:
           path: /users/{id}
           method: GET
+          request:
+            parameters:
+              paths:
+                id: true # EL PARÁMETRO id ES OBLIGATORIO
   create-users:
     handler: create_users/handler.create_users
     package:
       patterns:
         - "create_users/handler.py"
     events:
-      - httpApi:
+      - http:
           path: /users
           method: POST
+          request:
+            schemas:
+              application/json: ${file(schemas/user-schema.json)}
+              # EL ESQUEMA DEBE DE ESTAR EN LA CARPETA schemas PARA VALIDAR EL BODY
+              # https://docs.aws.amazon.com/apigateway/latest/developerguide/models-mappings-models.html
   update-users:
     handler: update_users/handler.update_users
     package:
       patterns:
         - "update_users/handler.py"
     events:
-      - httpApi:
+      - http:
           path: /users/{id}
           method: PUT
+          request:
+            parameters:
+              paths:
+                id: true # EL PARÁMETRO id ES OBLIGATORIO
+            schemas:
+              application/json: ${file(schemas/user-schema.json)}
+              # EL ESQUEMA DEBE DE ESTAR EN LA CARPETA schemas PARA VALIDAR EL BODY
   delete-users:
     handler: delete_users/handler.delete_users
     package:
       patterns:
         - "delete_users/handler.py"
     events:
-      - httpApi:
+      - http:
           path: /users/{id}
           method: DELETE
+          request:
+            parameters:
+              paths:
+                id: true # EL PARÁMETRO id ES OBLIGATORIO
 
 resources:
   Resources:

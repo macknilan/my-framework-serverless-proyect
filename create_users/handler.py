@@ -45,15 +45,18 @@ def create_users(event: any, context: any) -> dict:
     pre_payload = json.loads(event["body"])
     payload: dict[str, str] = {
         "pk": str(uuid.uuid4()),
-        "nombre": pre_payload["nombre"],
-        "telefono": pre_payload["telefono"],
+        "name": pre_payload["name"],
+        "age": pre_payload["age"],
+        "email": pre_payload["email"],
     }
 
     # INSERCIÓN DEL ITEM
     table_users_post = dynamo_table_name("usersTable", str(is_offline))
     response = table_users_post.put_item(Item=payload)
 
+    logger.info(f"RESPONSE --> {response}")
+
     if response["ResponseMetadata"]["HTTPStatusCode"] == 200:
-        return {"statusCode": 200, "body": json.dumps(payload)}
+        return {"statusCode": 200, "body": json.dumps({"user": payload})}
     else:
         return {"statusCode": 200, "body": {}}

@@ -1,7 +1,6 @@
 import json
 import logging
 import os
-import uuid
 from typing import Any
 
 import boto3

@@ -1,7 +1,6 @@
 import json
 import logging
 import os
-import uuid
 from typing import Any
 
 import boto3
@@ -56,15 +55,18 @@ def update_users(event: any, context: any) -> dict:
     # ACTUALIZACIÓN DEL ITEM
     response = table_users_put.update_item(
         Key={"pk": event["pathParameters"]["id"]},
-        UpdateExpression="SET #nombre = :val1, \
-            #telefono = :val2",
+        UpdateExpression="SET #name = :val1, \
+            #age = :val2, \
+            #email = :val3",
         ExpressionAttributeNames={
-            "#nombre": "nombre",
-            "#telefono": "telefono",
+            "#name": "name",
+            "#age": "age",
+            "#email": "email",
         },
         ExpressionAttributeValues={
-            ":val1": pre_payload["nombre"],
-            ":val2": pre_payload["telefono"],
+            ":val1": pre_payload["name"],
+            ":val2": pre_payload["age"],
+            ":val3": pre_payload["email"],
         },
         ReturnValues="ALL_NEW",
     )
