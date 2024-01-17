@@ -5,7 +5,8 @@
     "type": "object",
     "required": [
         "name",
-        "age"
+        "age",
+        "email"
     ],
     "properties": {
         "name": {
