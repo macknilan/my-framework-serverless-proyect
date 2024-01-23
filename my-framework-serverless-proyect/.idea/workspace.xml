@@ -9,7 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c8d21bdd-4fbf-4a6e-bcc1-c9b0881c2e96" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../Cuaderno/Aws/serverless_framework_en_aws.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Cuaderno/Aws/serverless_framework_en_aws.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../serverless.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../serverless.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +73,7 @@
       <workItem from="1706024512948" duration="1605000" />
       <workItem from="1706028588514" duration="9905000" />
       <workItem from="1706038537309" duration="1183000" />
-      <workItem from="1706046761958" duration="1829000" />
+      <workItem from="1706046761958" duration="2471000" />
     </task>
     <servers />
   </component>
