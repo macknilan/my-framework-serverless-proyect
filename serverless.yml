@@ -10,16 +10,21 @@ provider:
         - Effect: Allow
           Action: 'dynamodb:*'
           Resource: arn:aws:dynamodb:us-east-1:148037648285:table/usersTable
+        - Effect: Allow
+          Action: 's3:*'
+          Resource: arn:aws:s3:::s3-bucket-${self:service}-bucket/*
+  environment:
+    BUCKET: s3-bucket-${self:service}-bucket
 
 plugins:
   - serverless-dynamodb
   - serverless-offline
 
-
 package:
   individually: true
   patterns:
     - "!*/**"
+    - "!*.zip"
     # EL PATRON COINCIDE CON TODOS LOS ARCHIVOS EN EN LOS DIRECTORIOS DEBEN DE SER IGNORADOS/EXCLUIRSE
 
 custom:
@@ -93,10 +98,45 @@ functions:
             parameters:
               paths:
                 id: true # EL PARÁMETRO id ES OBLIGATORIO
+  singed-url:
+    handler: singed_url/handler.singed_url
+    package:
+      patterns:
+        - "singed_url/handler.py"
+    events:
+      - http:
+          path: /singedurl
+          method: GET
+          request:
+            parameters:
+              querystrings:
+                filename: true # EL PARÁMETRO filename ES OBLIGATORIO
+  thumbnail-generator:
+    handler: thumbnail/handler.thumbnail_generator
+    layers:
+      - !Ref BaseLambdaLayer
+    package:
+      patterns:
+        - "thumbnail/handler.py"
+    events:
+      - s3:
+          bucket: s3-bucket-${self:service}-bucket
+          event: s3:ObjectCreated:*
+          existing: true
+          rules:
+            - prefix: upload/
+
+layers:
+  base:
+    name: "pillow_layer_10_2_0"
+    compatibleRuntimes:
+      - python3.11
+    package:
+      artifact: pillow_layer.zip
 
 resources:
   Resources:
-    usersTable:
+    usersTable: # CREACIÓN DE LA TABLA DE DYNAMODB
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: usersTable
@@ -106,4 +146,36 @@ resources:
         KeySchema:
           - AttributeName: pk
             KeyType: HASH
-        BillingMode: PAY_PER_REQUEST
+        BillingMode: PAY_PER_REQUEST # ESTABLECE QUE LA TABLA SERA Read capacity mode EN ON-DEMAND
+    S3Bucket:
+      Type: 'AWS::S3::Bucket'
+      Properties:
+        PublicAccessBlockConfiguration:
+          BlockPublicAcls: false
+          BlockPublicPolicy: false
+        BucketName: s3-bucket-${self:service}-bucket
+        CorsConfiguration:
+          CorsRules:
+            - AllowedOrigins:
+                - '*'
+              AllowedHeaders:
+                - '*'
+              AllowedMethods:
+                - GET
+                - PUT
+                - POST
+                - DELETE
+                - HEAD
+              MaxAge: 3000
+    SampleBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: !Ref S3Bucket
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Action:
+                - 's3:GetObject'
+              Effect: Allow
+              Resource: 'arn:aws:s3:::s3-bucket-${self:service}-bucket/*'
+              Principal: '*'
