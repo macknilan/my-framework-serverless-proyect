@@ -11,6 +11,8 @@ D
 get_users/handler.py,6/7/6766a962eb2991a694859ec2cf3952a09c4acd29
 G
 update_users/handler.py,0/9/09e5b18fd5737340c9eb850ef745c81b7a799b3c
+E
+authorizer/handler.py,0/4/04b1412a6e728dc75347a92f1a50b8bc2ea6d823
 D
 thumbnail/handler.py,8/9/8926e1f85e40194563de575d782fd2c4858a66e9
 >
@@ -19,7 +21,3 @@ E
 singed_url/handler.py,8/5/85464423afe7e88f5a23ab54decd8857c95f612a
 m
 =docs/slides_curso-de-serverless-framework-avanzado-en-aws.pdf,1/7/178de77bcf0a25c9686ef14f673c16605eb51712
-F
-authorizer /handler.py,0/9/09ab4d943cedd8390c62c6ba3f683f604dc69ca3
-E
-authorizer/handler.py,0/4/04b1412a6e728dc75347a92f1a50b8bc2ea6d823
