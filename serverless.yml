@@ -4,6 +4,9 @@ frameworkVersion: '3'
 provider:
   name: aws
   runtime: python3.11
+  apiGateway:
+    apiKeys:
+      - crud-serverless-users-api-key # ESTABLECE LA API KEY PARA TODAS LAS RUTAS DE LA API
   iam:
     role:
       statements:
@@ -15,6 +18,7 @@ provider:
           Resource: arn:aws:s3:::s3-bucket-${self:service}-bucket/*
   environment:
     BUCKET: s3-bucket-${self:service}-bucket
+    SECRET_EEG: ${ssm:/SECRET_CRUD_SERVERLESS_FRAMEWOR} # OBTIENE EL VALOR DE UN PARÁMETRO DE SSM
 
 plugins:
   - serverless-dynamodb
@@ -42,6 +46,11 @@ custom:
     # noStart: true
 
 functions:
+  custom-authorizer:
+    handler: authorizer/handler.authorize
+    package:
+      patterns:
+        - "authorizer/handler.py"
   get-users:
     handler: get_users/handler.get_users
     package:
@@ -49,6 +58,7 @@ functions:
         - "get_users/handler.py" # EL PATRON ESTABLECE QUE SOLO SE DEBE DE INCLUIR EL ARCHIVO handler.py
     events:
       - http:
+          private: true # ESTABLECE QUE LA RUTA ES PRIVADA
           path: /users/{id}
           method: GET
           request:
@@ -63,6 +73,9 @@ functions:
     events:
       - http:
           path: /users
+          authorizer:
+            name: custom-authorizer # ESTABLECE EL NOMBRE DEL AUTORIZADOR
+            resultTtlInSeconds: 15 # ESTABLECE EL TIEMPO DE VIDA DE LA AUTORIZACIÓN EN CACHE segundos
           method: POST
           request:
             schemas:
