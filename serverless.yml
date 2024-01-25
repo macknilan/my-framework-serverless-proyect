@@ -23,6 +23,8 @@ provider:
 plugins:
   - serverless-dynamodb
   - serverless-offline
+  - serverless-apigateway-service-proxy
+  - serverless-lift
 
 package:
   individually: true
@@ -44,6 +46,38 @@ custom:
       migrate: true
     # Uncomment only if you already have a DynamoDB running locally
     # noStart: true
+  apiGatewayServiceProxies:
+    - sqs:
+        path: /likeuser  # RUTA EN LA CUAL VAN A CAER LOS REQUEST
+        method: post
+        queueName: likequeues # OBTIENE EL NOMBRE DE LA COLA DE SQS
+        cors: true # ESTABLECE QUE LA RUTA ES PUBLICA Y PUEDE SER ACCEDIDA POR CUALQUIER DOMINIO
+        response:
+          template:
+            # `success` is used when the integration response is 200
+            success: |-
+              { "message": "accepted" }
+            # `clientError` is used when the integration response is 400
+            clientError: |-
+              { "message": "there is an error in your request" }
+            # `serverError` is used when the integration response is 500
+            serverError: |-
+              { "message": "there was an error handling your request" }
+
+constructs:
+    sqs-queue:
+      type: queue
+      batchSize: 1 # QUE TANTOS DOCUMENTOS DE LA COLA VAN A SER DIGERIDOS POR EL LAMBDA 1:1
+      worker:
+        handler: like_user/handler.like_user
+        reservedConcurrency: 1 # ESTABLECE QUE SOLO UN LAMBDA VA A SER EJECUTADO A LA VEZ
+        package:
+          patterns:
+            - "like_user/handler.py"
+      extensions:
+        queue:
+          Properties:
+            QueueName: likequeues # ESTABLECE EL NOMBRE DE LA COLA DE SQS
 
 functions:
   custom-authorizer:
