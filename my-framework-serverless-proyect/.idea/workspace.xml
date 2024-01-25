@@ -9,12 +9,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c8d21bdd-4fbf-4a6e-bcc1-c9b0881c2e96" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../Cuaderno/Aws/serverless_framework_en_aws.md" beforeDir="false" afterPath="$PROJECT_DIR$/../../Cuaderno/Aws/serverless_framework_en_aws.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/securityhotspotstore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../serverless.yml" beforeDir="false" afterPath="$PROJECT_DIR$/../serverless.yml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +82,7 @@
       <workItem from="1706038537309" duration="1183000" />
       <workItem from="1706046761958" duration="4055000" />
       <workItem from="1706055467201" duration="15282000" />
-      <workItem from="1706116327051" duration="18572000" />
+      <workItem from="1706116327051" duration="18925000" />
     </task>
     <servers />
   </component>
