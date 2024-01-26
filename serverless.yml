@@ -25,6 +25,7 @@ plugins:
   - serverless-offline
   - serverless-apigateway-service-proxy
   - serverless-lift
+  - serverless-domain-manager
 
 package:
   individually: true
@@ -46,6 +47,13 @@ custom:
       migrate: true
     # Uncomment only if you already have a DynamoDB running locally
     # noStart: true
+  customDomain:
+    domainName: slscourse.mack.host # ESTABLECE EL DOMINIO
+    stage: dev # ESTABLECE EL STAGE
+    basePath: mapping # ESTABLECE EL PATH BASE
+    endpointType: "regional" # ESTABLECE EL TIPO DE ENDPOINT
+    securityPolicy: tls_1_2 # ESTABLECE EL PROTOCOLO DE SEGURIDAD
+    apiType: rest # ESTABLECE EL TIPO DE API
   apiGatewayServiceProxies:
     - sqs:
         path: /likeuser  # RUTA EN LA CUAL VAN A CAER LOS REQUEST
