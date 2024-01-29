@@ -7,7 +7,7 @@ Proyecto de ejemplo para crear una API HTTP con Python y el framework Serverless
 
 Con conexión a una base de datos DynamoDB.
 
-![Arquitectura de AWS para simple CRUD con Lambdas](/imgs/arq_proyecto_serverless_framework_simple_crud.png)
+![Arquitectura de AWS para simple CRUD con Lambdas](/imgs/arq_proyecto_serverless_framework_crud.png)
 
 ## Documentación de proyecto
 
