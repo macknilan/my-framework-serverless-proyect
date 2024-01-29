@@ -8,7 +8,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c8d21bdd-4fbf-4a6e-bcc1-c9b0881c2e96" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../README.md" beforeDir="false" afterPath="$PROJECT_DIR$/../README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../authorizer/handler.py" beforeDir="false" afterPath="$PROJECT_DIR$/../authorizer/handler.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -89,7 +89,7 @@
       <workItem from="1706241091204" duration="1765000" />
       <workItem from="1706284779645" duration="4589000" />
       <workItem from="1706475347640" duration="616000" />
-      <workItem from="1706542605024" duration="635000" />
+      <workItem from="1706542605024" duration="1098000" />
     </task>
     <servers />
   </component>
