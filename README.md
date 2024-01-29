@@ -11,7 +11,7 @@ Con conexión a una base de datos DynamoDB.
 
 ## Documentación de proyecto
 
-[Documentación](https://github.com/macknilan/Cuaderno/blob/master/Aws/serverless_framework_en_aws.md) :octocat: 🔗 ↗️
+<a href="https://github.com/macknilan/Cuaderno/blob/master/Aws/serverless_framework_en_aws.md" target="_blank">Documentación</a> :octocat: 🔗 ↗️ :octocat:
 
 ## Para hacer deploy del proyecto
 
